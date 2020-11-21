@@ -4,11 +4,11 @@ import mill._, scalalib._, scalajslib._, scalanativelib._, publish._
 trait ScalatagsPublishModule extends PublishModule {
   def artifactName = "scalatags"
 
-  def publishVersion = "0.9.2"
+  def publishVersion = "0.9.2-rx"
 
   def pomSettings = PomSettings(
     description = artifactName(),
-    organization = "com.lihaoyi",
+    organization = "ba.sake",
     url = "https://github.com/lihaoyi/scalatags",
     licenses = Seq(License.MIT),
     scm = SCM(
@@ -66,7 +66,7 @@ trait CommonTestModule extends ScalaModule with TestModule {
 
 
 object scalatags extends Module {
-  object jvm extends Cross[JvmScalatagsModule]("2.12.11", "2.13.2")
+  object jvm extends Cross[JvmScalatagsModule]("2.12.12", "2.13.3")
   class JvmScalatagsModule(val crossScalaVersion: String)
     extends Common with ScalaModule with ScalatagsPublishModule {
 
@@ -75,7 +75,7 @@ object scalatags extends Module {
     }
   }
 
-  object js extends Cross[JSScalatagsModule](("2.12.11", "0.6.32"), ("2.13.2", "0.6.32"), ("2.12.11", "1.0.1"), ("2.13.2", "1.0.1"))
+  object js extends Cross[JSScalatagsModule](("2.12.12", "1.3.1"), ("2.13.3", "1.3.1"))
   class JSScalatagsModule(val crossScalaVersion: String, crossJSVersion: String)
     extends Common with ScalaJSModule with ScalatagsPublishModule {
     def scalaJSVersion = crossJSVersion
@@ -86,9 +86,7 @@ object scalatags extends Module {
     object test extends Tests with CommonTestModule{
       def offset = os.up
       def crossScalaVersion = JSScalatagsModule.this.crossScalaVersion
-      val jsDomNodeJs =
-        if(crossJSVersion.startsWith("0.6.")) Agg()
-        else Agg(ivy"org.scala-js::scalajs-env-jsdom-nodejs:1.0.0")
+      val jsDomNodeJs = Agg(ivy"org.scala-js::scalajs-env-jsdom-nodejs:1.0.0")
       def ivyDeps = super.ivyDeps() ++ jsDomNodeJs
       def jsEnvConfig = mill.scalajslib.api.JsEnvConfig.JsDom()
     }
@@ -106,8 +104,8 @@ object scalatags extends Module {
   }
 }
 
-object example extends ScalaJSModule{
-  def scalaVersion = "2.12.11"
-  def scalaJSVersion = "0.6.32"
-  def moduleDeps = Seq(scalatags.js("2.12.11", "0.6.32"))
+object example extends ScalaJSModule{", "
+  def scalaVersion = "2.13.3"
+  def scalaJSVersion = "1.3.1"
+  def moduleDeps = Seq(scalatags.js("2.13.3", "1.3.1"))
 }

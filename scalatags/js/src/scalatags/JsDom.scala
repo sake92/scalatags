@@ -107,7 +107,7 @@ object JsDom
       TypedTag(tag, Nil, void, namespaceConfig)
     }
 
-    implicit class SeqFrag[A](xs: Seq[A])(implicit ev: A => Frag) extends Frag{
+    implicit class SeqFrag[A](val xs: Seq[A])(implicit val ev: A => Frag) extends Frag{
       Objects.requireNonNull(xs)
       def applyTo(t: dom.Element): Unit = xs.foreach(_.applyTo(t))
       def render: dom.Node = {
@@ -148,8 +148,9 @@ object JsDom
         case None =>
           if (!a.raw) {
             if (a.name == "class") {
-              v.toString.split(" ").foreach { cls =>
-                t.classList.add(cls.trim)
+              val newClasses = v.toString.split(" ").map(_.trim).filterNot(_.isEmpty)
+              newClasses.foreach { cls =>
+                t.classList.add(cls)
               }
             } else t.setAttribute(a.name, v.toString)
           } else {
