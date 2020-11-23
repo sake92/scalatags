@@ -66,7 +66,7 @@ trait Util[Builder, Output <: FragT, FragT] extends LowPriUtil[Builder, Output, 
    * Allows you to modify a [[ConcreteHtmlTag]] by adding a Seq containing other nest-able
    * objects to its list of children.
    */
-  implicit class SeqNode[A](xs: Seq[A])(implicit ev: A => Modifier[Builder]) extends Modifier[Builder]{
+  implicit class SeqNode[A](val xs: Seq[A])(implicit val ev: A => Modifier[Builder]) extends Modifier[Builder]{
     Objects.requireNonNull(xs)
     def applyTo(t: Builder) = xs.foreach(_.applyTo(t))
   }
