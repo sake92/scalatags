@@ -3,19 +3,13 @@ package jsdom
 import org.scalajs.dom
 import org.scalajs.dom.html
 import scalatags.generic.Util
+// sve prebacit u Tags !!!
 trait Tags2 extends generic.Tags2[dom.Element, dom.Element, dom.Node] with TagFactory{
    // Document Metadata
    lazy val title = typedTag[html.Title]("title")
    lazy val style = typedTag[html.Style]("style")
    // Scripting
    lazy val noscript = typedTag[html.Element]("noscript")
-   // Sections
-   lazy val section = typedTag[html.Element]("section")
-   lazy val nav = typedTag[html.Element]("nav")
-   lazy val article = typedTag[html.Element]("article")
-   lazy val aside = typedTag[html.Element]("aside")
-   lazy val address = typedTag[html.Element]("address")
-   lazy val main = typedTag[html.Element]("main")
    // Text level semantics
    lazy val q = typedTag[html.Quote]("q")
    lazy val dfn = typedTag[html.Element]("dfn")
@@ -38,8 +32,6 @@ trait Tags2 extends generic.Tags2[dom.Element, dom.Element, dom.Node] with TagFa
    lazy val progress = typedTag[html.Progress]("progress")
    lazy val meter = typedTag[html.Element]("meter")
    // Interactive elements
-   lazy val details = typedTag[html.Element]("details")
-   lazy val summary = typedTag[html.Element]("summary")
    lazy val command = typedTag[html.Element]("command", void = true)
    lazy val menu = typedTag[html.Menu]("menu")
  }

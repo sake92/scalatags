@@ -32,50 +32,6 @@ trait Tags2[Builder, Output <: FragT, FragT] extends Util[Builder, Output, FragT
     */
    val noscript: TypedTag[Builder, Output, FragT]
 
-   // Sections
-   /**
-    * Represents a generic section of a document, i.e., a thematic grouping of
-    * content, typically with a heading.
-    *
-    *  MDN
-    */
-   val section: TypedTag[Builder, Output, FragT]
-   /**
-    * Represents a section of a page that links to other pages or to parts within
-    * the page: a section with navigation links.
-    *
-    *  MDN
-    */
-   val nav: TypedTag[Builder, Output, FragT]
-   /**
-    * Defines self-contained content that could exist independently of the rest
-    * of the content.
-    *
-    *  MDN
-    */
-   val article: TypedTag[Builder, Output, FragT]
-   /**
-    * Defines some content loosely related to the page content. If it is removed,
-    * the remaining content still makes sense.
-    *
-    *  MDN
-    */
-   val aside: TypedTag[Builder, Output, FragT]
-   /**
-    * Defines a section containing contact information.
-    *
-    *  MDN
-    */
-   val address: TypedTag[Builder, Output, FragT]
-
-   /**
-    * Defines the main or important content in the document. There is only one
-    * main element in the document.
-    *
-    *  MDN
-    */
-   val main: TypedTag[Builder, Output, FragT]
-
    // Text level semantics
 
    /**
@@ -211,19 +167,6 @@ trait Tags2[Builder, Output <: FragT, FragT] extends Util[Builder, Output, FragT
 
 
    // Interactive elements
-   /**
-    * A widget from which the user can obtain additional information
-    * or controls.
-    *
-    *  MDN
-    */
-   val details: TypedTag[Builder, Output, FragT]
-   /**
-    * A summary, caption, or legend for a given details.
-    *
-    *  MDN
-    */
-   val summary: TypedTag[Builder, Output, FragT]
    /**
     * A command that the user can invoke.
     *

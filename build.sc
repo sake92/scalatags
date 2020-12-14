@@ -4,7 +4,7 @@ import mill._, scalalib._, scalajslib._, scalanativelib._, publish._
 trait ScalatagsPublishModule extends PublishModule {
   def artifactName = "scalatags"
 
-  def publishVersion = "0.9.2-rx2"
+  def publishVersion = "0.9.2-rx3.0"
 
   def pomSettings = PomSettings(
     description = artifactName(),

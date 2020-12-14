@@ -11,3 +11,11 @@ readme/target/*
 *.iml
 out
 /node_modules
+
+.bloop/
+.metals/
+.vscode/
+.bsp/
+
+
+

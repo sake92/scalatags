@@ -23,6 +23,15 @@ trait Tags extends generic.Tags[dom.Element, dom.Element, dom.Node] with TagFact
   lazy val h6 = typedTag[dom.html.Heading]("h6")
   lazy val header = typedTag[dom.html.Element]("header")
   lazy val footer = typedTag[dom.html.Element]("footer")
+  // Sections
+   lazy val section = typedTag[dom.html.Element]("section")
+   lazy val nav = typedTag[dom.html.Element]("nav")
+   lazy val article = typedTag[dom.html.Element]("article")
+   lazy val aside = typedTag[dom.html.Element]("aside")
+   lazy val address = typedTag[dom.html.Element]("address")
+   lazy val main = typedTag[dom.html.Element]("main")
+   lazy val details = typedTag[dom.html.Element]("details")
+   lazy val summary = typedTag[dom.html.Element]("summary")
   // Grouping content
   lazy val p = typedTag[dom.html.Paragraph]("p")
   lazy val hr = typedTag[dom.html.HR]("hr", void = true)

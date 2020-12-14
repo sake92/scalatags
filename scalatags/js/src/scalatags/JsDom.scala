@@ -109,12 +109,18 @@ object JsDom
 
     implicit class SeqFrag[A](val xs: Seq[A])(implicit val ev: A => Frag) extends Frag{
       Objects.requireNonNull(xs)
-      def applyTo(t: dom.Element): Unit = xs.foreach(_.applyTo(t))
-      def render: dom.Node = {
+      private val frag = locally {
         val frag = org.scalajs.dom.document.createDocumentFragment()
-        xs.map(_.render).foreach(frag.appendChild)
+        setMetadata(frag)
+        xs.zipWithIndex.map { case (x, i) =>
+          val elem = x.render
+          setMetadata(elem)
+          frag.appendChild(elem)
+        }
         frag
       }
+      def applyTo(t: dom.Element): Unit = xs.foreach(_.applyTo(t))
+      def render: dom.Node = frag
     }
     implicit class GeneratorFrag[A](xs: geny.Generator[A])(implicit ev: A => Frag) extends Frag{
       Objects.requireNonNull(xs)
@@ -130,16 +136,24 @@ object JsDom
   object StringFrag extends Companion[StringFrag]
   case class StringFrag(v: String) extends jsdom.Frag{
     Objects.requireNonNull(v)
-    def render: dom.Text = dom.document.createTextNode(v)
+    private val elem = locally {
+      val elem = dom.document.createTextNode(v)
+      setMetadata(elem)
+      elem
+    }
+    def render: dom.Text = elem
   }
 
   object RawFrag extends Companion[RawFrag]
   case class RawFrag(v: String) extends jsdom.Frag{
     Objects.requireNonNull(v)
-    def render: dom.Node = {
+    private val elem = locally {
       // https://davidwalsh.name/convert-html-stings-dom-nodes
-      dom.document.createRange().createContextualFragment(v)
+      val elem = dom.document.createRange().createContextualFragment(v)
+      setMetadata(elem)
+      elem
     }
+    def render: dom.Node = elem
   }
 
   class GenericAttr[T] extends AttrValue[T]{
@@ -192,11 +206,15 @@ object JsDom
     // and so just force this.
     protected[this] type Self = TypedTag[Output @uncheckedVariance]
 
-    def render: Output = {
+    private val elem = locally {
       val elem = dom.document.createElementNS(namespace.uri, tag)
+      setMetadata(elem)
       build(elem)
-      elem.asInstanceOf[Output]
+      elem
     }
+
+    def render: Output = elem.asInstanceOf[Output]
+    
     /**
      * Trivial override, not strictly necessary, but it makes IntelliJ happy...
      */
@@ -205,7 +223,12 @@ object JsDom
     }
     override def toString = render.outerHTML
   }
-
+  
+  def setMetadata(node: dom.Node): Unit = {
+    // set ID so it can get DOM-diffed in RxTags more easily! :)
+    val id = java.util.UUID.randomUUID.toString
+    node.asInstanceOf[js.Dynamic].scalaTag = js.Dynamic.literal(id = id)
+  }
 }
 
 trait LowPriorityImplicits{

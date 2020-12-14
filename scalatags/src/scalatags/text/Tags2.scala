@@ -6,13 +6,6 @@ trait Tags2 extends generic.Tags2[Builder, String, String] with TagFactory{
  lazy val style = tag("style")
   // Scripting
  lazy val noscript = tag("noscript")
-  // Sections
- lazy val section = tag("section")
- lazy val nav = tag("nav")
- lazy val article = tag("article")
- lazy val aside = tag("aside")
- lazy val address = tag("address")
- lazy val main = tag("main")
   // Text level semantics
  lazy val q = tag("q")
  lazy val dfn = tag("dfn")
@@ -35,8 +28,6 @@ trait Tags2 extends generic.Tags2[Builder, String, String] with TagFactory{
  lazy val progress = tag("progress")
  lazy val meter = tag("meter")
   // Interactive elements
- lazy val details = tag("details")
- lazy val summary = tag("summary")
  lazy val command = tag("command", void = true)
  lazy val menu = tag("menu")
 }

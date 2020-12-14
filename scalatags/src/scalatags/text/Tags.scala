@@ -20,6 +20,15 @@ trait Tags extends generic.Tags[Builder, String, String] with TagFactory{
   lazy val h6 = tag("h6")
   lazy val header = tag("header")
   lazy val footer = tag("footer")
+  // Sections
+  lazy val section = tag("section")
+  lazy val nav = tag("nav")
+  lazy val article = tag("article")
+  lazy val aside = tag("aside")
+  lazy val address = tag("address")
+  lazy val main = tag("main")
+  lazy val details = tag("details")
+  lazy val summary = tag("summary")
   // Grouping content
   lazy val p = tag("p")
   lazy val hr = tag("hr", void = true)
